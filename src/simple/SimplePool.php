@@ -9,12 +9,19 @@ declare(strict_types=1);
 
 namespace Topphp\TopphpPool\simple;
 
+use think\App;
 use Topphp\TopphpPool\BasePool;
 use Topphp\TopphpPool\contract\ConnectionInterface;
 
 class SimplePool extends BasePool
 {
-    protected function create(): ConnectionInterface
+    public function __construct(App $app, array $config = [])
+    {
+        $this->config = $config;
+        parent::__construct($app);
+    }
+
+    protected function createConnection(): ConnectionInterface
     {
         // TODO: Implement create() method.
         var_dump('create');

@@ -18,7 +18,15 @@ class ExampleTest extends TestCase
     public function testTrueIsTrue()
     {
         /**@var SimplePool $sp */
-        $sp = $this->app->make(SimplePool::class, []);
+        $sp = $this->app->make(SimplePool::class, [
+            'config' => [
+                'min_connections' => 1111,
+                'max_connections' => 111,
+                'wait_timeout' > 111,
+                'connect_timeout' > 111,
+                'max_idle_time'   => 610.0
+            ]
+        ]);
         /**@var SimpleConnection $sc */
         $sc = $sp->getInstance()->getConnection();
         $this->assertTrue(true);

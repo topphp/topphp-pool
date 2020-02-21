@@ -16,9 +16,14 @@ use Topphp\TopphpPool\contract\ConnectionInterface;
 
 abstract class BasePool
 {
+    /**
+     * @var array
+     */
     public $config = [
+        'min_connections' => 1,
         'max_connections' => 100,
         'wait_timeout' > 10,
+        'connect_timeout' > 10,
         'max_idle_time'   => 60.0
     ];
     /**
@@ -29,12 +34,15 @@ abstract class BasePool
      * @var Channel
      */
     protected $channel;
+    /**
+     * @var App
+     */
     protected $app;
 
     public function __construct(App $app)
     {
         $this->app     = $app;
-        $this->channel = $app->make(Channel::class, ['size' => 200]);
+        $this->channel = $app->make(Channel::class, ['size' => $this->config['max_connections']]);
     }
 
     public function getInstance(): ConnectionInterface
@@ -43,11 +51,11 @@ abstract class BasePool
         try {
             if ($length === 0 && $this->current < $this->config['max_connections']) {
                 ++$this->current;
-                return $this->create();
+                return $this->createConnection();
             }
         } catch (Throwable $e) {
             --$this->current;
-            throw new RuntimeException($e->getMessage());
+            throw new RuntimeException($e->getMessage(), $e->getCode());
         }
         $connection = $this->channel->pop($this->config['wait_timeout']);
         if (!$connection instanceof ConnectionInterface) {
@@ -56,14 +64,12 @@ abstract class BasePool
         return $connection;
     }
 
-    abstract protected function create(): ConnectionInterface;
-
     /**
      * 释放一个连接放回到连接池中
-     * @param BaseConnection $connection
+     * @param ConnectionInterface $connection
      * @author sleep
      */
-    public function release(BaseConnection $connection): void
+    public function release(ConnectionInterface $connection): void
     {
         $this->channel->push($connection);
     }
@@ -72,4 +78,6 @@ abstract class BasePool
     {
         var_dump('flush');
     }
+
+    abstract protected function createConnection(): ConnectionInterface;
 }

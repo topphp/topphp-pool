@@ -13,6 +13,9 @@ use Topphp\TopphpPool\contract\ConnectionInterface;
 
 abstract class BaseConnection implements ConnectionInterface
 {
+    /**
+     * @var BasePool
+     */
     protected $pool;
     /**
      * @var float
@@ -22,21 +25,6 @@ abstract class BaseConnection implements ConnectionInterface
     public function __construct(BasePool $pool)
     {
         $this->pool        = $pool;
-        $this->lastUseTime = microtime(true);
-    }
-
-    public function check(): bool
-    {
-        $maxIdleTime = $this->pool->config['max_idle_time'];
-        $now         = microtime(true);
-        var_dump('now:' . $now);
-        var_dump('lastUseTime+$maxIdleTime:' . (string)($maxIdleTime + $this->lastUseTime));
-        var_dump(!($now > $maxIdleTime + $this->lastUseTime));
-        if ($now > $maxIdleTime + $this->lastUseTime) {
-            return false;
-        }
-        $this->lastUseTime = $now;
-        return true;
     }
 
     /**
@@ -51,6 +39,17 @@ abstract class BaseConnection implements ConnectionInterface
     public function getConnection()
     {
         return $this->getActiveConnection();
+    }
+
+    public function check(): bool
+    {
+        $maxIdleTime = $this->pool->config['max_idle_time'];
+        $now         = microtime(true);
+        if ($now > $maxIdleTime + $this->lastUseTime) {
+            return false;
+        }
+        $this->lastUseTime = $now;
+        return true;
     }
 
     abstract protected function getActiveConnection();

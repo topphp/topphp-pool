@@ -20,8 +20,6 @@ use Swoole\Coroutine\Channel as CoChannel;
  */
 class Channel
 {
-    protected $size;
-
     /**
      * @var CoChannel
      */
@@ -32,14 +30,23 @@ class Channel
      */
     protected $queue;
 
+    /**
+     * Channel constructor.
+     * @param int $size 设置通道最大容量
+     */
     public function __construct(int $size = 100)
     {
-        $this->size    = $size;
         $this->channel = new CoChannel($size);
         $this->queue   = new SplQueue();
     }
 
-    public function pop(float $timeout)
+    /**
+     * 从通道中读取数据。
+     * @param float $timeout 设置超时时间,值单位: 秒【支持浮点型，如 1.5 表示 1s+500ms】,默认值：-1 永不超时
+     * @return mixed 返回值可以是任意类型的 PHP 变量，包括匿名函数和资源,通道被关闭时，执行失败返回 false
+     * @author sleep
+     */
+    public function pop(float $timeout = 60)
     {
         if ($this->isCoroutine()) {
             return $this->channel->pop($timeout);
@@ -47,6 +54,12 @@ class Channel
         return $this->queue->shift();
     }
 
+    /**
+     * 向通道中写入数据。
+     * @param mixed $data 任意类型数据,为避免产生歧义，请勿向通道中写入空数据，如 0、false、空字符串、null
+     * @return bool|mixed
+     * @author sleep
+     */
     public function push($data)
     {
         if ($this->isCoroutine()) {
