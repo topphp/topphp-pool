@@ -15,12 +15,6 @@ use Topphp\TopphpPool\contract\ConnectionInterface;
 
 class SimplePool extends BasePool
 {
-    public function __construct(App $app, array $config = [])
-    {
-        $this->config = $config;
-        parent::__construct($app);
-    }
-
     protected function createConnection(): ConnectionInterface
     {
         // TODO: Implement create() method.

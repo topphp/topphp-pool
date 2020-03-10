@@ -24,7 +24,7 @@ abstract class BaseConnection implements ConnectionInterface
 
     public function __construct(BasePool $pool)
     {
-        $this->pool        = $pool;
+        $this->pool = $pool;
     }
 
     /**

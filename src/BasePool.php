@@ -22,8 +22,8 @@ abstract class BasePool
     public $config = [
         'min_connections' => 1,
         'max_connections' => 100,
-        'wait_timeout' > 10,
-        'connect_timeout' > 10,
+        'wait_timeout'    => 10,
+        'connect_timeout' => 10,
         'max_idle_time'   => 60.0
     ];
     /**
@@ -34,15 +34,14 @@ abstract class BasePool
      * @var Channel
      */
     protected $channel;
-    /**
-     * @var App
-     */
+
+    /** @var App */
     protected $app;
 
-    public function __construct(App $app)
+    public function __construct()
     {
-        $this->app     = $app;
-        $this->channel = $app->make(Channel::class, ['size' => $this->config['max_connections']]);
+        $this->app     = App::getInstance();
+        $this->channel = $this->app->make(Channel::class, ['size' => $this->config['max_connections']]);
     }
 
     public function getInstance(): ConnectionInterface
@@ -80,4 +79,12 @@ abstract class BasePool
     }
 
     abstract protected function createConnection(): ConnectionInterface;
+
+    /**
+     * @return int
+     */
+    public function getCurrent(): int
+    {
+        return $this->current;
+    }
 }
