@@ -6,11 +6,24 @@
  * @author sleep <sleep@kaituocn.com>
  */
 declare(strict_types=1);
+
 namespace Topphp\TopphpPool\rpc;
 
 use Swoole\ObjectProxy;
 
 class RpcProxy extends ObjectProxy
 {
+    private $connection;
+
+    public function __construct($connection)
+    {
+        $this->connection = $connection();
+        parent::__construct($this->connection);
+    }
+
+    public function __call(string $name, array $arguments)
+    {
+        return $this->connection->{$name}(...$arguments);
+    }
 
 }

@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace Topphp\TopphpPool\rpc;
 
-use RuntimeException;
 use Swoole\Coroutine\Client;
 use Topphp\TopphpPool\exception\ConnectionException;
 
@@ -77,7 +76,7 @@ class RpcConnection
         );
         if ($result === false && ($client->errCode === 114 || $client->errCode === 115)) {
             $client->close();
-            throw new RuntimeException('Connect to server failed.');
+            throw new ConnectionException('Connect to server failed.');
         }
         $this->connection  = $client;
         $this->lastUseTime = microtime(true);
