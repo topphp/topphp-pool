@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Topphp\TopphpPool;
 
+use think\App;
 use Topphp\TopphpPool\contract\ConnectionInterface;
 
 abstract class BaseConnection implements ConnectionInterface
@@ -22,8 +23,14 @@ abstract class BaseConnection implements ConnectionInterface
      */
     protected $lastUseTime = 0.0;
 
-    public function __construct(BasePool $pool)
+    /**
+     * @var App
+     */
+    protected $app;
+
+    public function __construct(App $app, BasePool $pool)
     {
+        $this->app  = $app;
         $this->pool = $pool;
     }
 

@@ -38,9 +38,9 @@ abstract class BasePool
     /** @var App */
     protected $app;
 
-    public function __construct()
+    public function __construct(App $app)
     {
-        $this->app     = App::getInstance();
+        $this->app     = $app;
         $this->channel = $this->app->make(Channel::class, ['size' => $this->config['max_connections']]);
     }
 
