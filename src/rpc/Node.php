@@ -7,7 +7,7 @@
  */
 declare(strict_types=1);
 
-namespace Topphp\TopphpSwoole\rpc;
+namespace Topphp\TopphpPool\rpc;
 
 class Node
 {

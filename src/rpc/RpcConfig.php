@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace Topphp\TopphpPool\rpc;
 
-use Topphp\TopphpSwoole\rpc\Node;
+use Topphp\TopphpPool\rpc\Node;
 
 class RpcConfig
 {
