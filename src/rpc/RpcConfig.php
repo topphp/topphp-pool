@@ -9,6 +9,8 @@ declare(strict_types=1);
 
 namespace Topphp\TopphpPool\rpc;
 
+use Topphp\TopphpSwoole\rpc\Node;
+
 class RpcConfig
 {
     /**
@@ -39,9 +41,9 @@ class RpcConfig
     protected $options = [];
 
     /**
-     * @var array
+     * @var Node
      */
-    protected $node = [];
+    protected $node;
 
     /**
      * @return int
@@ -134,18 +136,18 @@ class RpcConfig
     }
 
     /**
-     * @return array
+     * @return Node
      */
-    public function getNode(): array
+    public function getNode(): Node
     {
         return $this->node;
     }
 
     /**
-     * @param array $node
+     * @param Node $node
      * @return RpcConfig
      */
-    public function setNode(array $node = []): self
+    public function setNode(Node $node): self
     {
         $this->node = $node;
         return $this;

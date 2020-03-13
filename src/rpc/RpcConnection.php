@@ -70,8 +70,8 @@ class RpcConnection
         $client = new Client(SWOOLE_SOCK_TCP);
         $client->set($this->config->getOptions());
         $result = $client->connect(
-            $this->config->getNode()['host'],
-            $this->config->getNode()['port'],
+            $this->config->getNode()->getHost(),
+            $this->config->getNode()->getPort(),
             $this->config->getConnectTimeout()
         );
         if ($result === false && ($client->errCode === 114 || $client->errCode === 115)) {
