@@ -10,6 +10,26 @@
 #### 简介
 一个基于swoole的通用连接池组件
 
+#### 使用
+```php
+$rpcConfig = App::make(RpcConfig::class, []);
+if (isset($config) && !empty($config)) {
+    $rpcConfig
+        ->setNode($this->node)
+        ->setOptions($config['options'])
+        ->setMinConnections($config['pool']['min_connections'])
+        ->setMaxConnections($config['pool']['max_connections'])
+        ->setConnectTimeout($config['pool']['connect_timeout'])
+        ->setMaxIdleTime($config['pool']['max_idle_time'])
+        ->setWaitTimeout($config['pool']['wait_timeout']);
+}
+/** @var RpcPool $pool */
+$pool   = App::make(RpcPool::class, [
+    $rpcConfig,
+    10
+]);
+$client = $pool->get();
+```
 
 #### 注意
 现代的PHP组件都使用语义版本方案(http://semver.org), 版本号由三个点(.)分数字组成(例如:1.13.2).第一个数字是主版本号,如果PHP组件更新破坏了向后兼容性,会提升主版本号.
