@@ -24,7 +24,7 @@ class Node
      */
     private $weight;
 
-    public function __construct(string $host, int $port, int $weight)
+    public function __construct(string $host, int $port, int $weight = 0)
     {
         $this->setHost($host);
         $this->setPort($port);
