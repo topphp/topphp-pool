@@ -13,7 +13,7 @@ use Swoole\ConnectionPool;
 
 class DbPool extends ConnectionPool
 {
-    protected $config;
+    protected $config = [];
 
     public function __construct(DbConfig $dbConfig)
     {

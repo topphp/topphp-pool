@@ -9,9 +9,13 @@ declare(strict_types=1);
 
 namespace Topphp\TopphpPool\db;
 
+use Psr\SimpleCache\CacheInterface;
 use Swoole\ObjectProxy;
+use think\db\BaseQuery;
+use think\db\ConnectionInterface;
+use think\DbManager;
 
-class DbProxy extends ObjectProxy
+class DbProxy extends ObjectProxy implements ConnectionInterface
 {
     private $connection;
 
@@ -26,4 +30,98 @@ class DbProxy extends ObjectProxy
         return $this->connection->{$name}(...$arguments);
     }
 
+    public function getQueryClass(): string
+    {
+        return $this->__call(__FUNCTION__, func_get_args());
+    }
+
+    public function connect(array $config = [], $linkNum = 0)
+    {
+        return $this->__call(__FUNCTION__, func_get_args());
+    }
+
+    public function setDb(DbManager $db)
+    {
+        return $this->__call(__FUNCTION__, func_get_args());
+    }
+
+    public function setCache(CacheInterface $cache)
+    {
+        return $this->__call(__FUNCTION__, func_get_args());
+    }
+
+    public function getConfig(string $config = '')
+    {
+        return $this->__call(__FUNCTION__, func_get_args());
+    }
+
+    public function close()
+    {
+        return $this->__call(__FUNCTION__, func_get_args());
+    }
+
+    public function find(BaseQuery $query): array
+    {
+        return $this->__call(__FUNCTION__, func_get_args());
+    }
+
+    public function select(BaseQuery $query): array
+    {
+        return $this->__call(__FUNCTION__, func_get_args());
+    }
+
+    public function insert(BaseQuery $query, bool $getLastInsID = false)
+    {
+        return $this->__call(__FUNCTION__, func_get_args());
+    }
+
+    public function insertAll(BaseQuery $query, array $dataSet = []): int
+    {
+        return $this->__call(__FUNCTION__, func_get_args());
+    }
+
+    public function update(BaseQuery $query): int
+    {
+        return $this->__call(__FUNCTION__, func_get_args());
+    }
+
+    public function delete(BaseQuery $query): int
+    {
+        return $this->__call(__FUNCTION__, func_get_args());
+    }
+
+    public function value(BaseQuery $query, string $field, $default = null)
+    {
+        return $this->__call(__FUNCTION__, func_get_args());
+    }
+
+    public function column(BaseQuery $query, string $column, string $key = ''): array
+    {
+        return $this->__call(__FUNCTION__, func_get_args());
+    }
+
+    public function transaction(callable $callback)
+    {
+        return $this->__call(__FUNCTION__, func_get_args());
+    }
+
+    public function startTrans()
+    {
+        return $this->__call(__FUNCTION__, func_get_args());
+    }
+
+    public function commit()
+    {
+        return $this->__call(__FUNCTION__, func_get_args());
+    }
+
+    public function rollback()
+    {
+        return $this->__call(__FUNCTION__, func_get_args());
+    }
+
+    public function getLastSql(): string
+    {
+        return $this->__call(__FUNCTION__, func_get_args());
+    }
 }
