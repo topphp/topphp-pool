@@ -9,8 +9,6 @@ declare(strict_types=1);
 
 namespace Topphp\TopphpPool\rpc;
 
-use Topphp\TopphpPool\rpc\Node;
-
 class RpcConfig
 {
     /**
@@ -28,7 +26,7 @@ class RpcConfig
     /**
      * @var float
      */
-    protected $connect_timeout = 10.0;
+    protected $connectTimeout = 10.0;
     /**
      * 最大空闲时间
      * @var float
@@ -104,16 +102,16 @@ class RpcConfig
      */
     public function getConnectTimeout(): float
     {
-        return $this->connect_timeout;
+        return $this->connectTimeout;
     }
 
     /**
-     * @param float $connect_timeout
+     * @param float $connectTimeout
      * @return RpcConfig
      */
-    public function setConnectTimeout(float $connect_timeout): self
+    public function setConnectTimeout(float $connectTimeout): self
     {
-        $this->connect_timeout = $connect_timeout;
+        $this->connectTimeout = $connectTimeout;
         return $this;
     }
 

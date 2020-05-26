@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Topphp\Test;
 
 use Swoole\Coroutine\Client;
+use Topphp\TopphpPool\rpc\Node;
 use Topphp\TopphpPool\rpc\RpcConfig;
 use Topphp\TopphpPool\rpc\RpcPool;
 use Topphp\TopphpPool\simple\SimpleConnection;
@@ -39,15 +40,13 @@ class ExampleTest extends TestCase
     {
         /** @var RpcConfig $config */
         $config = $this->app->make(RpcConfig::class);
+        $node   = new Node('127.0.0.1', 9502);
         $config
             ->setConnectTimeout(1)
-            ->setNode([
-                'host' => '127.0.0.1',
-                'port' => 9502
-            ])
+            ->setNode($node)
             ->setMaxConnections(100);
         /** @var RpcPool $pool */
-        $pool = $this->app->make(RpcPool::class, [$config, $config->getMaxConnections()]);
+        $pool   = $this->app->make(RpcPool::class, [$config, $config->getMaxConnections()]);
         $client = $pool->get();
 //        $client = new Client(SWOOLE_SOCK_TCP);
 //        $client->connect('127.0.0.1', 9502);
