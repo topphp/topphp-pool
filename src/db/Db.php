@@ -31,7 +31,7 @@ class Db extends \think\Db
         if ($force) {
             return $this->createConnection($name);
         }
-        return $this->getPoolConnection();
+        return $this->getPoolConnection($name);
     }
 
     public function createPoolConnection(string $name): ConnectionInterface
@@ -47,11 +47,11 @@ class Db extends \think\Db
         return $config;
     }
 
-    public function getPoolConnection(): ConnectionInterface
+    public function getPoolConnection($name): ConnectionInterface
     {
-        $class = spl_object_hash($this) . '.Connection';
-        if (Context::has($class)) {
-            return Context::get($class);
+        $class = 'db.connection.' . $name;
+        if (Context::has($class, Context::cid())) {
+            return Context::get($class, Context::cid());
         }
         /** @var DbPool $pool */
         $pool   = App::make(DbPool::class, [$this->config]);
@@ -59,6 +59,6 @@ class Db extends \think\Db
         Coroutine::defer(function () use ($pool, $client) {
             $pool->put($client);
         });
-        return Context::set($class, $client);
+        return Context::set($class, $client, Context::cid());
     }
 }

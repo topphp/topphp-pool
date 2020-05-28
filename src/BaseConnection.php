@@ -60,5 +60,4 @@ abstract class BaseConnection implements ConnectionInterface
     }
 
     abstract protected function getActiveConnection();
-
 }

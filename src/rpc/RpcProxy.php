@@ -25,5 +25,4 @@ class RpcProxy extends ObjectProxy
     {
         return $this->connection->{$name}(...$arguments);
     }
-
 }

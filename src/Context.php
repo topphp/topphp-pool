@@ -75,4 +75,20 @@ class Context
         self::set($key, $value, $cid);
         return $value;
     }
+
+    public static function rememberData(string $key, $value)
+    {
+        if (self::has($key)) {
+            return self::get($key);
+        }
+
+        if ($value instanceof Closure) {
+            // 获取缓存数据
+            $value = $value();
+        }
+
+        self::set($key, $value);
+
+        return $value;
+    }
 }

@@ -22,5 +22,4 @@ class RpcPool extends ConnectionPool
             return new RpcConnection($this->config);
         }, $size, RpcProxy::class);
     }
-
 }
