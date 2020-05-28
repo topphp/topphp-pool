@@ -13,8 +13,8 @@ namespace Topphp\TopphpPool\db;
 class DbConfig
 {
     protected $driver      = 'mysql';
-    protected $maxActive   = 3;
-    protected $maxWaitTime = 5;
+    protected $maxActive   = 300;
+    protected $maxWaitTime = 30;
 
     /**
      * @return string
