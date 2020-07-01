@@ -55,14 +55,7 @@ vendor/
 Via Composer
 
 ``` bash
-$ composer create-project topphp/topphp-pool 你的组件名称
-```
-
-## Usage
-
-``` php
-$skeleton = new topphp\componentBuilder();
-echo $skeleton->echoPhrase('Hello, TOPPHP!');
+$ composer require topphp/topphp-pool 你的组件名称
 ```
 
 ## Change log
