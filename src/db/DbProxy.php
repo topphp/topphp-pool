@@ -133,5 +133,5 @@ class DbProxy extends ObjectProxy implements ConnectionInterface
     public function name($name)
     {
         return $this->__call(__FUNCTION__, func_get_args());
-    }
+     }
 }
