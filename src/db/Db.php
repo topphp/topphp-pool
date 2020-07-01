@@ -8,10 +8,12 @@
 declare(strict_types=1);
 
 namespace Topphp\TopphpPool\db;
+
 use Swoole\Coroutine;
 use think\db\ConnectionInterface;
 use think\facade\App;
 use Topphp\TopphpPool\Context;
+
 class Db extends \think\Db
 {
     protected $connection;
